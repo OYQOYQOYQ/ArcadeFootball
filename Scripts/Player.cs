@@ -20,6 +20,10 @@ public partial class Player : CharacterBody2D
         MoveAndSlide();
     }
 
+    /// <summary>
+    /// 根据角色当前的方向, 判断是否水平翻转.
+    /// </summary>
+    /// <param name="direction"> 角色当前的方向. </param>
     private void PlayerIsFlipH(Vector2 direction)
     {
         if (direction.X < 0)

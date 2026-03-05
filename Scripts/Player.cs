@@ -1,19 +1,35 @@
 using Godot;
-using Scripts.StateMachine;
+
+namespace ArcadeFootball.Scripts;
 
 public partial class Player : CharacterBody2D
 {
     [Export] 
     public float MoveSpeed { get; private set; } = 80.0f;
+    [Export] 
+    public Node StateMachine { get; set; }
+    public Vector2 Direction;
+    
     [Export]
-    private StateMachine _stateMachine;
-    [Export]
-    private Sprite2D sprite2D;
-
-    private Vector2 initDirection = Vector2.Right;
+    private Sprite2D _sprite2D;
 
     public override void _PhysicsProcess(double delta)
     {
-        _stateMachine._PhysicsProcess(delta);
+        Direction = Input.GetVector("p1_left", "p1_right", "p1_up", "p1_down");
+        PlayerIsFlipH(Direction);
+        StateMachine._PhysicsProcess(delta);
+        MoveAndSlide();
+    }
+
+    private void PlayerIsFlipH(Vector2 direction)
+    {
+        if (direction == Vector2.Left)
+        {
+            _sprite2D.FlipH = true;
+        }
+        else if (direction == Vector2.Right)
+        {
+            _sprite2D.FlipH = false;
+        }
     }
 }

@@ -93,10 +93,11 @@ states/Run/position = Vector2(550.2602, 99.6516)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_yoq75"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_ksbbd"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_glx4g")]
 graph_offset = Vector2(-40.882698, 23.099987)
 
-[node name="Player" type="CharacterBody2D" unique_id=1800593941 node_paths=PackedStringArray("_stateMachine")]
+[node name="Player" type="CharacterBody2D" unique_id=1800593941 node_paths=PackedStringArray("StateMachine", "_sprite2D")]
 motion_mode = 1
 script = ExtResource("1_kyqiw")
-_stateMachine = NodePath("StateMachine")
+StateMachine = NodePath("StateMachine")
+_sprite2D = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1683273952]
 texture = ExtResource("1_rpqav")
@@ -124,10 +125,12 @@ parameters/conditions/IsRunning = false
 script = ExtResource("3_5ixxa")
 CurrentState = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine" unique_id=1976392354 node_paths=PackedStringArray("Animtree")]
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1976392354 node_paths=PackedStringArray("Animtree", "Player")]
 script = ExtResource("4_nn08x")
 Animtree = NodePath("../../AnimationTree")
+Player = NodePath("../..")
 
-[node name="Run" type="Node" parent="StateMachine" unique_id=2129908582 node_paths=PackedStringArray("Animtree")]
+[node name="Run" type="Node" parent="StateMachine" unique_id=2129908582 node_paths=PackedStringArray("Animtree", "Player")]
 script = ExtResource("5_52ee3")
 Animtree = NodePath("../../AnimationTree")
+Player = NodePath("../..")

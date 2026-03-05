@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using Godot;
 
-namespace Scripts.StateMachine;
+namespace ArcadeFootball.Scripts.StateMachine;
 
 public partial class StateMachine : Node
 {
     [Export]
     public State CurrentState { get; private set; }
-    private Dictionary<StringName, State> _states = [];
+    private readonly Dictionary<StringName, State> _states = [];
 
     public override void _Ready()
     {
@@ -31,12 +31,10 @@ public partial class StateMachine : Node
 
     private void OnStateTransition(State fromState, StringName toState)
     {
-        if (_states.TryGetValue(toState, out var newState))
-        {
-            if (CurrentState == newState) return;
-            CurrentState.Exit();
-            newState.Enter();
-            CurrentState = newState;
-        }
+        if (! _states.TryGetValue(toState, out var newState)) return;
+        if (CurrentState == newState) return;
+        CurrentState.Exit();
+        newState.Enter();
+        CurrentState = newState;
     }
 }

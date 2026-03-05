@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://cpg4861towyw4"]
 
-[ext_resource type="Script" uid="uid://c36gehpnbtjcg" path="res://Scenes/Player.cs" id="1_kyqiw"]
+[ext_resource type="Script" uid="uid://beq77aax65nyx" path="res://Scripts/Player.cs" id="1_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://lal6mt72x7ud" path="res://Assets/art/characters/soccer-player.png" id="1_rpqav"]
+[ext_resource type="Script" uid="uid://c7x4nthxv4tmh" path="res://Scripts/StateMachine/StateMachine.cs" id="3_5ixxa"]
+[ext_resource type="Script" uid="uid://bci0p7r2mp0ds" path="res://Scripts/StateMachine/Player/Idle.cs" id="4_nn08x"]
+[ext_resource type="Script" uid="uid://clpb2gvwekygu" path="res://Scripts/StateMachine/Player/Run.cs" id="5_52ee3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rpqav"]
 radius = 4.0
@@ -65,9 +68,35 @@ _data = {
 &"Run": SubResource("Animation_rpqav")
 }
 
-[node name="Player" type="CharacterBody2D" unique_id=1800593941]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bhhdu"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_megsn"]
+animation = &"Run"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yoq75"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ksbbd"]
+advance_mode = 2
+advance_condition = &"IsRunning"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_glx4g"]
+advance_mode = 2
+advance_condition = &"IsNotRunning"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_miouo"]
+states/Idle/node = SubResource("AnimationNodeAnimation_bhhdu")
+states/Idle/position = Vector2(380.54587, 98.87959)
+states/Run/node = SubResource("AnimationNodeAnimation_megsn")
+states/Run/position = Vector2(550.2602, 99.6516)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_yoq75"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_ksbbd"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_glx4g")]
+graph_offset = Vector2(-40.882698, 23.099987)
+
+[node name="Player" type="CharacterBody2D" unique_id=1800593941 node_paths=PackedStringArray("_stateMachine")]
 motion_mode = 1
 script = ExtResource("1_kyqiw")
+_stateMachine = NodePath("StateMachine")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1683273952]
 texture = ExtResource("1_rpqav")
@@ -84,3 +113,21 @@ shape = SubResource("CapsuleShape2D_rpqav")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1721346721]
 libraries/ = SubResource("AnimationLibrary_dewec")
 autoplay = &"Idle"
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1920855813]
+tree_root = SubResource("AnimationNodeStateMachine_miouo")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/IsNotRunning = false
+parameters/conditions/IsRunning = false
+
+[node name="StateMachine" type="Node" parent="." unique_id=559893617 node_paths=PackedStringArray("CurrentState")]
+script = ExtResource("3_5ixxa")
+CurrentState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1976392354 node_paths=PackedStringArray("Animtree")]
+script = ExtResource("4_nn08x")
+Animtree = NodePath("../../AnimationTree")
+
+[node name="Run" type="Node" parent="StateMachine" unique_id=2129908582 node_paths=PackedStringArray("Animtree")]
+script = ExtResource("5_52ee3")
+Animtree = NodePath("../../AnimationTree")

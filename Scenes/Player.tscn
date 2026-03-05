@@ -125,12 +125,12 @@ parameters/conditions/IsRunning = false
 script = ExtResource("3_5ixxa")
 CurrentState = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine" unique_id=1976392354 node_paths=PackedStringArray("Animtree", "Player")]
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1976392354 node_paths=PackedStringArray("Player", "AnimTree")]
 script = ExtResource("4_nn08x")
-Animtree = NodePath("../../AnimationTree")
 Player = NodePath("../..")
+AnimTree = NodePath("../../AnimationTree")
 
-[node name="Run" type="Node" parent="StateMachine" unique_id=2129908582 node_paths=PackedStringArray("Animtree", "Player")]
+[node name="Run" type="Node" parent="StateMachine" unique_id=2129908582 node_paths=PackedStringArray("Player", "AnimTree")]
 script = ExtResource("5_52ee3")
-Animtree = NodePath("../../AnimationTree")
 Player = NodePath("../..")
+AnimTree = NodePath("../../AnimationTree")

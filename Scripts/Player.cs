@@ -17,17 +17,16 @@ public partial class Player : CharacterBody2D
     {
         Direction = Input.GetVector("p1_left", "p1_right", "p1_up", "p1_down");
         PlayerIsFlipH(Direction);
-        StateMachine._PhysicsProcess(delta);
         MoveAndSlide();
     }
 
     private void PlayerIsFlipH(Vector2 direction)
     {
-        if (direction == Vector2.Left)
+        if (direction.X < 0)
         {
             _sprite2D.FlipH = true;
         }
-        else if (direction == Vector2.Right)
+        else if (direction.X > 0)
         {
             _sprite2D.FlipH = false;
         }

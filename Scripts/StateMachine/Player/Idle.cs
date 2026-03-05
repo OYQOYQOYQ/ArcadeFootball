@@ -8,6 +8,7 @@ public partial class Idle : State
     {
         AnimTree.Set("parameters/conditions/IsNotRunning", true);
         AnimTree.Set("parameters/conditions/IsRunning", false);
+        Player.Velocity = Vector2.Zero;
     }
 
     public override void PhysicsProcess(double delta)
@@ -15,10 +16,6 @@ public partial class Idle : State
         if (Player.Direction != Vector2.Zero)
         {
             EmitSignalStateTransition(this, "Run");
-        }
-        else
-        {
-            Player.Velocity = Vector2.Zero;
         }
     }
 }

@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://cpg4861towyw4"]
+
+[ext_resource type="Script" uid="uid://c36gehpnbtjcg" path="res://Scenes/Player.cs" id="1_kyqiw"]
+[ext_resource type="Texture2D" uid="uid://lal6mt72x7ud" path="res://Assets/art/characters/soccer-player.png" id="1_rpqav"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rpqav"]
+radius = 4.0
+height = 18.0
+
+[sub_resource type="Animation" id="Animation_kyqiw"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45000002),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_gntrk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_rpqav"]
+resource_name = "Run"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dewec"]
+_data = {
+&"Idle": SubResource("Animation_kyqiw"),
+&"RESET": SubResource("Animation_gntrk"),
+&"Run": SubResource("Animation_rpqav")
+}
+
+[node name="Player" type="CharacterBody2D" unique_id=1800593941]
+motion_mode = 1
+script = ExtResource("1_kyqiw")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1683273952]
+texture = ExtResource("1_rpqav")
+centered = false
+offset = Vector2(-16, -32)
+hframes = 6
+vframes = 13
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1078989377]
+position = Vector2(-6.7762636e-21, -4)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_rpqav")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1721346721]
+libraries/ = SubResource("AnimationLibrary_dewec")
+autoplay = &"Idle"

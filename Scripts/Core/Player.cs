@@ -1,24 +1,24 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using ArcadeFootball.Scripts.Input;
 using Godot;
 
-namespace ArcadeFootball.Scripts;
+namespace ArcadeFootball.Scripts.Core;
 
 public partial class Player : CharacterBody2D
 {
-    [Export] 
+    [Export]
     public float MoveSpeed { get; private set; } = 80.0f;
-    [Export] 
+    [Export]
     public Node StateMachine { get; set; }
     public Vector2 Direction;
-    
+
     [Export]
     private Sprite2D _sprite2D;
     [Export]
-    private EPlayerType ePlayerType;
+    private EPlayerType _ePlayerType;
 
     public override void _PhysicsProcess(double delta)
     {
-        Direction = InputManager.Instance.GetInputPlayer(ePlayerType);
+        Direction = InputManager.Instance.GetInputPlayer(_ePlayerType);
         PlayerIsFlipH(Direction);
         MoveAndSlide();
     }

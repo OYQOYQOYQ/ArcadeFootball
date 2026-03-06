@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Godot;
 
 namespace ArcadeFootball.Scripts;
@@ -12,10 +13,12 @@ public partial class Player : CharacterBody2D
     
     [Export]
     private Sprite2D _sprite2D;
+    [Export]
+    private EPlayerType ePlayerType;
 
     public override void _PhysicsProcess(double delta)
     {
-        Direction = Input.GetVector("p1_left", "p1_right", "p1_up", "p1_down");
+        Direction = InputManager.Instance.GetInputPlayer(ePlayerType);
         PlayerIsFlipH(Direction);
         MoveAndSlide();
     }

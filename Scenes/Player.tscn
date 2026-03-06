@@ -8,7 +8,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rpqav"]
 radius = 4.0
-height = 18.0
+height = 15.0
 
 [sub_resource type="Animation" id="Animation_kyqiw"]
 resource_name = "idle"

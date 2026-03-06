@@ -1,17 +1,22 @@
-using Godot;
+﻿using Godot;
 
-namespace ArcadeFootball.Scripts.StateMachine.Player;
+namespace ArcadeFootball.Scripts.StateMachine.PlayerStates;
 
 public partial class Run : State
 {
     public override void Enter()
     {
-        AnimTree.Set("parameters/conditions/IsNotRunning", false);
-        AnimTree.Set("parameters/conditions/IsRunning", true);
+        AnimPlayer.Play("Run");
+        GD.Print("Run state entered");
     }
 
     public override void PhysicsProcess(double delta)
     {
+        if (Player.IsSlideTackle) 
+        { 
+            EmitSignalStateTransition(this, "SlideTackle");
+        }
+
         if (Player.Direction == Vector2.Zero)
         {
             EmitSignalStateTransition(this, "Idle");

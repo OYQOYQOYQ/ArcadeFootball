@@ -1,6 +1,9 @@
 ﻿namespace ArcadeFootball.Scripts.Enums;
 
-public class PlayerType
+public enum EPlayerType
 {
-    
+    P1,
+    P2,
+    Cpu,
 }
+

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Godot;
 
 namespace ArcadeFootball.Scripts.StateMachine;
@@ -27,6 +27,15 @@ public partial class StateMachine : Node
     public override void _PhysicsProcess(double delta)
     {
         CurrentState?.PhysicsProcess(delta);
+    }
+
+    public override void _ExitTree()
+    {
+        foreach (var state in _states.Values) 
+        { 
+            state.StateTransition -= OnStateTransition;
+        }
+        _states.Clear();
     }
 
     private void OnStateTransition(State fromState, StringName toState)

@@ -1,7 +1,7 @@
+﻿using ArcadeFootball.Scripts.Characters;
 using Godot;
 
 namespace ArcadeFootball.Scripts.StateMachine;
-
 
 [GlobalClass]
 public partial class State : Node
@@ -9,9 +9,9 @@ public partial class State : Node
     [Signal]
     public delegate void StateTransitionEventHandler(State fromState, StringName toState);
     [Export]
-    public Scripts.Player Player { get; set; }
+    public Player Player { get; set; }
     [Export]
-    protected AnimationTree AnimTree { get; set; }
+    protected AnimationPlayer AnimPlayer { get; set; }
 
     public virtual void Enter(){}
     public virtual void Exit(){}

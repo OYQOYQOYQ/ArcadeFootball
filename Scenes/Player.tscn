@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://cpg4861towyw4"]
 
-[ext_resource type="Script" uid="uid://beq77aax65nyx" path="res://Scripts/Player.cs" id="1_kyqiw"]
+[ext_resource type="Script" uid="uid://wf7gkmq4rvlo" path="res://Scripts/Characters/Player.cs" id="1_5ixxa"]
 [ext_resource type="Texture2D" uid="uid://lal6mt72x7ud" path="res://Assets/art/characters/soccer-player.png" id="1_rpqav"]
-[ext_resource type="Script" uid="uid://c7x4nthxv4tmh" path="res://Scripts/StateMachine/StateMachine.cs" id="3_5ixxa"]
-[ext_resource type="Script" uid="uid://bci0p7r2mp0ds" path="res://Scripts/StateMachine/Player/Idle.cs" id="4_nn08x"]
-[ext_resource type="Script" uid="uid://clpb2gvwekygu" path="res://Scripts/StateMachine/Player/Run.cs" id="5_52ee3"]
+[ext_resource type="Script" uid="uid://cltslvt4xewgw" path="res://Scripts/collision_shape_2d.gd" id="3_52ee3"]
+[ext_resource type="Script" uid="uid://c0a3nj7p3swnr" path="res://Scripts/StateMachine/StateMachine.cs" id="3_nn08x"]
+[ext_resource type="Script" uid="uid://cd7g76a1gfd68" path="res://Scripts/StateMachine/PlayerStates/Idle.cs" id="4_52ee3"]
+[ext_resource type="Script" uid="uid://darfhoveim34p" path="res://Scripts/StateMachine/PlayerStates/Run.cs" id="5_bhhdu"]
+[ext_resource type="Script" uid="uid://e5ptxjw5gag8" path="res://Scripts/StateMachine/PlayerStates/SlideTackle.cs" id="6_nn08x"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rpqav"]
 radius = 4.0
@@ -61,43 +63,76 @@ tracks/0/keys = {
 "values": [6, 7, 8, 9, 10, 11]
 }
 
+[sub_resource type="Animation" id="Animation_52ee3"]
+resource_name = "SlideTackle"
+length = 0.1
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [30]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dewec"]
 _data = {
 &"Idle": SubResource("Animation_kyqiw"),
 &"RESET": SubResource("Animation_gntrk"),
-&"Run": SubResource("Animation_rpqav")
+&"Run": SubResource("Animation_rpqav"),
+&"SlideTackle": SubResource("Animation_52ee3")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bhhdu"]
-animation = &"Idle"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_megsn"]
 animation = &"Run"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yoq75"]
-advance_mode = 2
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nn08x"]
+animation = &"SlideTackle"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ksbbd"]
 advance_mode = 2
-advance_condition = &"IsRunning"
+advance_expression = "IsRunning"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_glx4g"]
 advance_mode = 2
-advance_condition = &"IsNotRunning"
+advance_expression = "!IsRunning"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_52ee3"]
+advance_mode = 2
+advance_expression = "IsSlideTackle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bhhdu"]
+advance_mode = 2
+advance_expression = "!IsSlideTackle && IsRunning && IsSlideTackleEnd"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_megsn"]
+advance_mode = 2
+advance_expression = "!IsSlideTackle && !IsRunning && IsSlideTackleEnd"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_miouo"]
 states/Idle/node = SubResource("AnimationNodeAnimation_bhhdu")
-states/Idle/position = Vector2(380.54587, 98.87959)
+states/Idle/position = Vector2(342.54587, 100)
 states/Run/node = SubResource("AnimationNodeAnimation_megsn")
-states/Run/position = Vector2(550.2602, 99.6516)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_yoq75"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_ksbbd"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_glx4g")]
-graph_offset = Vector2(-40.882698, 23.099987)
+states/Run/position = Vector2(550.2602, 100)
+states/SlideTackle/node = SubResource("AnimationNodeAnimation_nn08x")
+states/SlideTackle/position = Vector2(550.2602, 201.09999)
+transitions = ["Idle", "Run", SubResource("AnimationNodeStateMachineTransition_ksbbd"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_glx4g"), "Run", "SlideTackle", SubResource("AnimationNodeStateMachineTransition_52ee3"), "SlideTackle", "Run", SubResource("AnimationNodeStateMachineTransition_bhhdu"), "SlideTackle", "Idle", SubResource("AnimationNodeStateMachineTransition_megsn")]
+graph_offset = Vector2(-108.970535, 53.09999)
 
-[node name="Player" type="CharacterBody2D" unique_id=1800593941 node_paths=PackedStringArray("StateMachine", "_sprite2D")]
+[node name="Player" type="CharacterBody2D" unique_id=1800593941 node_paths=PackedStringArray("_playerSprite", "PlayerCollisionShape")]
 motion_mode = 1
-script = ExtResource("1_kyqiw")
-StateMachine = NodePath("StateMachine")
-_sprite2D = NodePath("Sprite2D")
+script = ExtResource("1_5ixxa")
+SlideTackleDuration = 0.2
+_playerSprite = NodePath("Sprite2D")
+PlayerCollisionShape = NodePath("CollisionShape2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1683273952]
 texture = ExtResource("1_rpqav")
@@ -110,27 +145,32 @@ vframes = 13
 position = Vector2(-6.7762636e-21, -4)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_rpqav")
+script = ExtResource("3_52ee3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1721346721]
 libraries/ = SubResource("AnimationLibrary_dewec")
 autoplay = &"Idle"
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1920855813]
+callback_mode_process = 0
 tree_root = SubResource("AnimationNodeStateMachine_miouo")
-anim_player = NodePath("../AnimationPlayer")
-parameters/conditions/IsNotRunning = false
-parameters/conditions/IsRunning = false
 
 [node name="StateMachine" type="Node" parent="." unique_id=559893617 node_paths=PackedStringArray("CurrentState")]
-script = ExtResource("3_5ixxa")
+script = ExtResource("3_nn08x")
 CurrentState = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine" unique_id=1976392354 node_paths=PackedStringArray("Player", "AnimTree")]
-script = ExtResource("4_nn08x")
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1976392354 node_paths=PackedStringArray("Player", "AnimPlayer")]
+script = ExtResource("4_52ee3")
 Player = NodePath("../..")
-AnimTree = NodePath("../../AnimationTree")
+AnimPlayer = NodePath("../../AnimationPlayer")
 
-[node name="Run" type="Node" parent="StateMachine" unique_id=2129908582 node_paths=PackedStringArray("Player", "AnimTree")]
-script = ExtResource("5_52ee3")
+[node name="Run" type="Node" parent="StateMachine" unique_id=2129908582 node_paths=PackedStringArray("Player", "AnimPlayer")]
+script = ExtResource("5_bhhdu")
 Player = NodePath("../..")
-AnimTree = NodePath("../../AnimationTree")
+AnimPlayer = NodePath("../../AnimationPlayer")
+
+[node name="SlideTackle" type="Node" parent="StateMachine" unique_id=543410441 node_paths=PackedStringArray("Player", "AnimPlayer")]
+script = ExtResource("6_nn08x")
+_slideTackleSpeed = 120.0
+Player = NodePath("../..")
+AnimPlayer = NodePath("../../AnimationPlayer")

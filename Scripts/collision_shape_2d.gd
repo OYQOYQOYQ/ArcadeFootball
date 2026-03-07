@@ -1,7 +1,12 @@
 extends CollisionShape2D
 
 
-func _physics_process(_delta):
+var height: float = 0
+
+
+func _process(_delta):
     if shape is CapsuleShape2D:
-        print("半径: ", shape.radius)
-        print("高度: ", shape.height)
+        if height == shape.height:
+            return
+        height = shape.height;
+        print("高度: ", height)

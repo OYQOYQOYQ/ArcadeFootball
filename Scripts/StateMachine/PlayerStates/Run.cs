@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace ArcadeFootball.Scripts.StateMachine.PlayerStates;
 
@@ -12,8 +12,8 @@ public partial class Run : State
 
     public override void PhysicsProcess(double delta)
     {
-        if (Player.IsSlideTackle) 
-        { 
+        if(Player.IsSlideTackle && Player.IsSlideTackleAvailable)
+        {
             EmitSignalStateTransition(this, "SlideTackle");
         }
 

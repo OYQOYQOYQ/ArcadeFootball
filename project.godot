@@ -44,7 +44,7 @@ project/assembly_name="ArcadeFootball"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg", "res://addons/godotsize/plugin.cfg", "res://addons/smart_editor_switcher/plugin.cfg")
 
 [input]
 

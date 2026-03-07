@@ -1,4 +1,4 @@
-﻿using ArcadeFootball.Scripts.Characters;
+using ArcadeFootball.Scripts.Characters;
 using Godot;
 
 namespace ArcadeFootball.Scripts.StateMachine;

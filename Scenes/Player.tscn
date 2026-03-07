@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://darfhoveim34p" path="res://Scripts/StateMachine/PlayerStates/Run.cs" id="5_bhhdu"]
 [ext_resource type="Script" uid="uid://e5ptxjw5gag8" path="res://Scripts/StateMachine/PlayerStates/SlideTackle.cs" id="6_nn08x"]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_52ee3"]
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rpqav"]
 radius = 4.0
 height = 15.0
@@ -88,44 +90,6 @@ _data = {
 &"SlideTackle": SubResource("Animation_52ee3")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bhhdu"]
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_megsn"]
-animation = &"Run"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nn08x"]
-animation = &"SlideTackle"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ksbbd"]
-advance_mode = 2
-advance_expression = "IsRunning"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_glx4g"]
-advance_mode = 2
-advance_expression = "!IsRunning"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_52ee3"]
-advance_mode = 2
-advance_expression = "IsSlideTackle"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bhhdu"]
-advance_mode = 2
-advance_expression = "!IsSlideTackle && IsRunning && IsSlideTackleEnd"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_megsn"]
-advance_mode = 2
-advance_expression = "!IsSlideTackle && !IsRunning && IsSlideTackleEnd"
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_miouo"]
-states/Idle/node = SubResource("AnimationNodeAnimation_bhhdu")
-states/Idle/position = Vector2(342.54587, 100)
-states/Run/node = SubResource("AnimationNodeAnimation_megsn")
-states/Run/position = Vector2(550.2602, 100)
-states/SlideTackle/node = SubResource("AnimationNodeAnimation_nn08x")
-states/SlideTackle/position = Vector2(550.2602, 201.09999)
-transitions = ["Idle", "Run", SubResource("AnimationNodeStateMachineTransition_ksbbd"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_glx4g"), "Run", "SlideTackle", SubResource("AnimationNodeStateMachineTransition_52ee3"), "SlideTackle", "Run", SubResource("AnimationNodeStateMachineTransition_bhhdu"), "SlideTackle", "Idle", SubResource("AnimationNodeStateMachineTransition_megsn")]
-graph_offset = Vector2(-108.970535, 53.09999)
-
 [node name="Player" type="CharacterBody2D" unique_id=1800593941 node_paths=PackedStringArray("PlayerSprite", "PlayerCollisionShape", "SlideTackleTimer")]
 motion_mode = 1
 script = ExtResource("1_5ixxa")
@@ -143,6 +107,11 @@ offset = Vector2(-16, -32)
 hframes = 6
 vframes = 13
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=134529930]
+visible = false
+position = Vector2(-6.7762636e-21, 0)
+sprite_frames = SubResource("SpriteFrames_52ee3")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1078989377]
 unique_name_in_owner = true
 position = Vector2(-6.7762636e-21, -4)
@@ -152,10 +121,6 @@ shape = SubResource("CapsuleShape2D_rpqav")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1721346721]
 libraries/ = SubResource("AnimationLibrary_dewec")
 autoplay = &"Idle"
-
-[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1920855813]
-callback_mode_process = 0
-tree_root = SubResource("AnimationNodeStateMachine_miouo")
 
 [node name="StateMachine" type="Node" parent="." unique_id=559893617 node_paths=PackedStringArray("CurrentState")]
 script = ExtResource("3_nn08x")

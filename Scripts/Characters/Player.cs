@@ -14,6 +14,7 @@ public partial class Player : CharacterBody2D
 	[Export] public float MoveSpeed { get; private set; } = 80.0f;  // 玩家移动速度
 
 	[ExportGroup("Slide Tackle")]
+	[Export] public float SlideTackleSpeed { get; private set; } = 100.0f;  // 滑铲速度 
 	[Export(PropertyHint.Range, "0, 0.5, 0.1")] 
 	public float SlideTackleDuration { get; private set; } = 0.2f;  // 滑铲持续时间
 	[Export(PropertyHint.Range, "0, 1, 0.1")]

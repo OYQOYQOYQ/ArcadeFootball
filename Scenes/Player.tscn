@@ -122,6 +122,9 @@ shape = SubResource("CapsuleShape2D_rpqav")
 libraries/ = SubResource("AnimationLibrary_dewec")
 autoplay = &"Idle"
 
+[node name="SlideTackleTimer" type="Timer" parent="." unique_id=2113493960]
+unique_name_in_owner = true
+
 [node name="StateMachine" type="Node" parent="." unique_id=559893617 node_paths=PackedStringArray("CurrentState")]
 script = ExtResource("3_nn08x")
 CurrentState = NodePath("Idle")
@@ -138,9 +141,5 @@ AnimPlayer = NodePath("../../AnimationPlayer")
 
 [node name="SlideTackle" type="Node" parent="StateMachine" unique_id=543410441 node_paths=PackedStringArray("Player", "AnimPlayer")]
 script = ExtResource("6_nn08x")
-_slideTackleSpeed = 120.0
 Player = NodePath("../..")
 AnimPlayer = NodePath("../../AnimationPlayer")
-
-[node name="SlideTackleTimer" type="Timer" parent="." unique_id=2113493960]
-unique_name_in_owner = true

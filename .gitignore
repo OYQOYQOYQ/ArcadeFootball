@@ -1,6 +1,51 @@
 # Godot 4+ specific ignores
 .godot/
+
+# IDE / Editor
 .idea/
-addons/
 .vscode/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# C# / .NET
+*.csproj.user
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Godot specific
+*.import
+*.translation
+*.uid
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Android build (if you export to Android)
 /android/
+
+# Addons (optional - comment out if you want to track)
+addons/

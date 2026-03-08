@@ -1,8 +1,9 @@
 // 玩家脚本
 // 
 
+using System;
 using ArcadeFootball.Scripts.Controllers;
-using ArcadeFootball.Scripts.Enums;
+using ArcadeFootball.Scripts.Core;
 using Godot;
 
 namespace ArcadeFootball.Scripts.Characters;
@@ -30,25 +31,37 @@ public partial class Player : CharacterBody2D
 	public bool IsSlideTackle { get; private set; }  // 是否处于滑铲状态
 	public bool IsSlideTackleAvailable { get; set; } = true;  // 滑铲是否可用
 
-	public override void _Ready()
+    public InputController GameInput { get; private set; }
+    private float _lastDirectionX;
+
+    public override void _Ready()
 	{
 		PlayerSprite ??= GetNode<Sprite2D>("%Sprite2D");
 		PlayerCollisionShape ??= GetNode<CollisionShape2D>("%CollisionShape2D");
 		SlideTackleTimer ??= GetNode<Timer>("%SlideTackleTimer");
+
 		SlideTackleTimer.WaitTime = SlideTackleCooldown;
+		GameInput = InputController.Instance;
+		if (GameInput == null)
+		{
+			#if DEBUG
+			GD.PrintErr("InputController 未初始化！请确保它在场景树种先于 Player 节点加载！");
+			#endif
+			SetPhysicsProcess(false);
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Direction = InputController.Instance.GetInputPlayerDirection(PlayerType);
+		Direction = GameInput.GetInputPlayerDirection(PlayerType);
 		if (IsSlideTackleAvailable) 
 		{ 
-			IsSlideTackle = InputController.Instance.GetInputPlayerSlideTackle(PlayerType);
+			IsSlideTackle = GameInput.GetInputPlayerSlideTackle(PlayerType);
 		}
 		else 
 		{ 
 			IsSlideTackle = false;
-			InputController.Instance.ResetSlideTackle(PlayerType);
+			GameInput.ResetSlideTackle(PlayerType);
 		}
 		PlayerIsFlipH(Direction);
 		MoveAndSlide();
@@ -57,11 +70,10 @@ public partial class Player : CharacterBody2D
 	// 根据角色当前的方向 判断是否水平翻转
 	private void PlayerIsFlipH(Vector2 direction)
 	{
-		PlayerSprite.FlipH = direction.X switch
-		{
-			< 0 => true,
-			> 0 => false,
-			_ => PlayerSprite.FlipH
-		};
+		if (direction.X == 0) return;
+		if (Math.Abs(direction.X - _lastDirectionX) < 0.01f) return;
+		
+		_lastDirectionX = direction.X;
+		PlayerSprite.FlipH = direction.X < 0;
 	}
 }

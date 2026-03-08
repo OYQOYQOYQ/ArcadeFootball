@@ -1,6 +1,7 @@
 using ArcadeFootball.Scripts.Characters;
-using ArcadeFootball.Scripts.Controllers;
 using Godot;
+using static ArcadeFootball.Scripts.Core.StringNames;
+using static ArcadeFootball.Scripts.Core.DataConstants;
 
 namespace ArcadeFootball.Scripts.StateMachine.PlayerStates;
 
@@ -12,11 +13,15 @@ public partial class SlideTackle : State
 
     public override void Enter()
 	{
+        #if DEBUG
+        GD.Print($"{Player.PlayerType} 进入了 SlideTackle 状态");
+        #endif
+		
 		CacheProperties();
 		StartCooldown();
 
-		Player.PlayerCollisionShape.Shape.Set("height", 18.0f);
-		AnimPlayer.Play("SlideTackle");
+		Player.PlayerCollisionShape.Shape.Set(HeightProp, HEIGHT_INCREASE);
+		AnimPlayer.Play(SlideTackleState);
 
 		Player.Velocity = Player.Direction * _slideTackleSpeed;
 	}
@@ -29,17 +34,14 @@ public partial class SlideTackle : State
 		_remainingTime -= (float)delta;
 		if (_remainingTime > 0) return;
 
-		if (Player.Direction != Vector2.Zero)
-			EmitSignalStateTransition(this, "Run");
-		else
-			EmitSignalStateTransition(this, "Idle");
+		EmitSignalStateTransition(this, Player.Direction != Vector2.Zero ? RunState : IdleState);
 	}
 
 	public override void Exit()
 	{
 		Player.SlideTackleTimer.Start();
-		Player.PlayerCollisionShape.Shape.Set("height", 15.0f);
-		InputController.Instance.ResetSlideTackle(Player.PlayerType);
+		Player.PlayerCollisionShape.Shape.Set(HeightProp, HEIGHT_RESTORE);
+		Player.GameInput.ResetSlideTackle(Player.PlayerType);
 	}
 
 	private void OnSlideTackleTimerTimeout()
@@ -68,12 +70,16 @@ public partial class SlideTackle : State
         Player.SlideTackleTimer.Stop();
         Player.IsSlideTackleAvailable = true;
 		Player.SlideTackleTimer.Timeout -= OnSlideTackleTimerTimeout;
+
+		#if DEBUG
         GD.Print("滑铲冷却结束");
+		#endif
     }
 
 	// 平方减速：更有"摩擦刹停"的真实感
     private float DecelerationAlgorithm() 
 	{ 
+		if (_duration <= 0) return 0;
 		float progress = 1.0f - (_remainingTime / _duration);
 		return _slideTackleSpeed * (1.0f - progress * progress * 0.8f);
 	}

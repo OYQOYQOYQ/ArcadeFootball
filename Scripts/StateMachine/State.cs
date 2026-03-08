@@ -6,12 +6,9 @@ namespace ArcadeFootball.Scripts.StateMachine;
 [GlobalClass]
 public partial class State : Node
 {
-    [Signal]
-    public delegate void StateTransitionEventHandler(State fromState, StringName toState);
-    [Export]
-    public Player Player { get; set; }
-    [Export]
-    protected AnimationPlayer AnimPlayer { get; set; }
+    [Signal] public delegate void StateTransitionEventHandler(State fromState, StringName toState);
+    [Export] public Player Player { get; private set; }
+    [Export] protected AnimationPlayer AnimPlayer { get; private set; }
 
     public virtual void Enter(){}
     public virtual void Exit(){}

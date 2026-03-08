@@ -1,4 +1,4 @@
-﻿namespace ArcadeFootball.Scripts.Enums;
+﻿namespace ArcadeFootball.Scripts.Core;
 
 public enum EPlayerType
 {

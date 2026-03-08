@@ -1,53 +1,44 @@
-﻿using ArcadeFootball.Scripts.Characters;
-using ArcadeFootball.Scripts.Enums;
+﻿using ArcadeFootball.Scripts.Core;
 using Godot;
+using static ArcadeFootball.Scripts.Core.StringNames;
 
 namespace ArcadeFootball.Scripts.Controllers;
 
 public partial class InputController : Node
 {
-    # region P1 InputMap
-    private StringName P1Left {get; set;} = "p1_left";
-    private StringName P1Right {get; set;} = "p1_right";
-    private StringName P1Up {get; set;} = "p1_up";
-    private StringName P1Down {get; set;} = "p1_down";
-    private StringName P1SlideTackleKey {get; set;} = "p1_slide_tackle";
-    #endregion
-
-    #region P2 InputMap
-    private StringName P2Left {get; set;} = "p2_left";
-    private StringName P2Right {get; set;} = "p2_right";
-    private StringName P2Up {get; set;} = "p2_up";
-    private StringName P2Down {get; set;} = "p2_down";
-    private StringName P2SlideTackleKey {get; set;} = "p2_slide_tackle";
-    #endregion
-
-    #region 输入状态（只读）
-    public Vector2 P1Direction { get; private set; }
-    public Vector2 P2Direction { get; private set; }
-    public bool P1SlideTackle { get; set; }
-    public bool P2SlideTackle { get; set; }
-    #endregion
+    private Vector2 P1Direction { get; set; }
+    private Vector2 P2Direction { get; set; }
+    private bool P1SlideTackle { get; set; }
+    private bool P2SlideTackle { get; set; }
 
     public static InputController Instance {get; private set;}
 
     public override void _Ready()
     {
+        if (Instance != null && Instance != this)
+        {
+            #if DEBUG
+            GD.PrintErr("检测到多个 InputController 实例！");
+            #endif
+            
+            QueueFree();
+            return;
+        }
         Instance = this;
     }
 
     public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed(P1SlideTackleKey))
+        if (@event.IsActionPressed(P1.SlideTackle))
             P1SlideTackle = true;
-        else if (@event.IsActionPressed(P2SlideTackleKey))
+        else if (@event.IsActionPressed(P2.SlideTackle))
             P2SlideTackle = true;
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        P1Direction = Input.GetVector(P1Left, P1Right, P1Up, P1Down);
-        P2Direction = Input.GetVector(P2Left, P2Right, P2Up, P2Down);
+        P1Direction = Input.GetVector(P1.Left, P1.Right, P1.Up, P1.Down);
+        P2Direction = Input.GetVector(P2.Left, P2.Right, P2.Up, P2.Down);
     }
 
     public void ResetSlideTackle(EPlayerType ePlayerType)

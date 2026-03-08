@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 namespace ArcadeFootball.Scripts.StateMachine;
@@ -16,6 +17,16 @@ public partial class StateMachine : Node
 			if (child is not State state) continue;
 			_states.Add(child.Name, state);
 			state.StateTransition += OnStateTransition;
+		}
+
+		if (CurrentState == null && _states.Count > 0)
+		{
+			CurrentState = _states.Values.First();
+			CurrentState.Enter();
+		}
+		else
+		{
+			CurrentState?.Enter();
 		}
 	}
 

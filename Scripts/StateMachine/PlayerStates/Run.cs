@@ -16,7 +16,7 @@ public partial class Run : State
 
     public override void PhysicsProcess(double delta)
     {
-        if(Player.IsSlideTackle && Player.IsSlideTackleAvailable)
+        if(Player.IsSlideTackle)
         {
             EmitSignalStateTransition(this, SlideTackleState);
             return;

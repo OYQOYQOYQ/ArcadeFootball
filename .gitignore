@@ -19,6 +19,7 @@ x86/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+./logs
 
 # C# / .NET
 *.csproj.user

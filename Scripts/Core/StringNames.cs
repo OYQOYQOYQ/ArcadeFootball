@@ -27,4 +27,5 @@ public static class StringNames
     public static readonly StringName IdleState = "Idle";
     public static readonly StringName RunState = "Run";
     public static readonly StringName SlideTackleState = "SlideTackle";
+    public static readonly StringName RecoveryState = "Recovery";
 }

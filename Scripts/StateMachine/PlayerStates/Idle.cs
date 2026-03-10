@@ -1,5 +1,5 @@
-﻿using Godot;
-using static ArcadeFootball.Scripts.Core.StringNames;
+﻿using static ArcadeFootball.Scripts.Core.StringNames;
+using Godot;
 
 namespace ArcadeFootball.Scripts.StateMachine.PlayerStates;
 

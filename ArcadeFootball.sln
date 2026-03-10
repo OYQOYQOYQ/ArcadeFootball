@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcadeFootball", "ArcadeFootball.csproj", "{DE7DC5CC-ADC4-483F-A907-3F26A484FE20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcadeFootball", "ArcadeFootball.csproj", "{DEFE5A55-F122-4F6E-BC68-F5821F95657A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,11 +9,11 @@ Global
 	ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DE7DC5CC-ADC4-483F-A907-3F26A484FE20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE7DC5CC-ADC4-483F-A907-3F26A484FE20}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE7DC5CC-ADC4-483F-A907-3F26A484FE20}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
-		{DE7DC5CC-ADC4-483F-A907-3F26A484FE20}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
-		{DE7DC5CC-ADC4-483F-A907-3F26A484FE20}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
-		{DE7DC5CC-ADC4-483F-A907-3F26A484FE20}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{DEFE5A55-F122-4F6E-BC68-F5821F95657A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEFE5A55-F122-4F6E-BC68-F5821F95657A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEFE5A55-F122-4F6E-BC68-F5821F95657A}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{DEFE5A55-F122-4F6E-BC68-F5821F95657A}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{DEFE5A55-F122-4F6E-BC68-F5821F95657A}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{DEFE5A55-F122-4F6E-BC68-F5821F95657A}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
 	EndGlobalSection
 EndGlobal

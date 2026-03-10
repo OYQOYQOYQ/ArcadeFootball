@@ -1,6 +1,6 @@
-﻿using ArcadeFootball.Scripts.Core;
+﻿using static ArcadeFootball.Scripts.Core.StringNames;
+using ArcadeFootball.Scripts.Core;
 using Godot;
-using static ArcadeFootball.Scripts.Core.StringNames;
 
 namespace ArcadeFootball.Scripts.Controllers;
 

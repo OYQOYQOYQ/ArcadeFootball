@@ -7,8 +7,14 @@ namespace ArcadeFootball.Scripts.StateMachine;
 public partial class State : Node
 {
     [Signal] public delegate void StateTransitionEventHandler(State fromState, StringName toState);
-    [Export] public Player Player { get; private set; }
-    [Export] protected AnimationPlayer AnimPlayer { get; private set; }
+    protected Player Player { get; private set; } 
+    protected AnimationPlayer AnimPlayer { get; private set; }
+    
+    public override void _Ready()
+    {
+        Player = Owner as Player;
+        AnimPlayer = Player?.GetNode<AnimationPlayer>("%AnimationPlayer");
+    }
 
     public virtual void Enter(){}
     public virtual void Exit(){}

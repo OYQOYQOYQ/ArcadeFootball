@@ -28,4 +28,10 @@ public static class StringNames
     public static readonly StringName RunState = "Run";
     public static readonly StringName SlideTackleState = "SlideTackle";
     public static readonly StringName RecoveryState = "Recovery";
+    
+    public static readonly StringName LooseState = "Loose";
+    public static readonly StringName DribbleState = "Dribble";
+    
+    public static readonly StringName LeftDribble =  "left_dribble";
+    public static readonly StringName RightDribble =  "right_dribble";
 }

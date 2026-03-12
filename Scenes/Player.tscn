@@ -6,9 +6,7 @@
 [ext_resource type="Script" uid="uid://cd7g76a1gfd68" path="res://Scripts/StateMachine/PlayerStates/Idle.cs" id="4_52ee3"]
 [ext_resource type="Script" uid="uid://darfhoveim34p" path="res://Scripts/StateMachine/PlayerStates/Run.cs" id="5_bhhdu"]
 [ext_resource type="Script" uid="uid://e5ptxjw5gag8" path="res://Scripts/StateMachine/PlayerStates/SlideTackle.cs" id="6_nn08x"]
-[ext_resource type="Script" uid="uid://dyg8c1usf58g5" path="res://Scripts/StateMachine/PlayerStates/Recovery.cs" id="7_52ee3"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_52ee3"]
+[ext_resource type="Script" uid="uid://bbbrkjy8hwerd" path="res://Scripts/StateMachine/PlayerStates/Recovery.cs" id="7_52ee3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rpqav"]
 radius = 4.0
@@ -126,16 +124,15 @@ offset = Vector2(-16, -32)
 hframes = 6
 vframes = 13
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=134529930]
-visible = false
-position = Vector2(-6.7762636e-21, 0)
-sprite_frames = SubResource("SpriteFrames_52ee3")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1078989377]
 unique_name_in_owner = true
 position = Vector2(-6.7762636e-21, -4)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_rpqav")
+
+[node name="DribblePoint" type="Marker2D" parent="." unique_id=308016362]
+unique_name_in_owner = true
+position = Vector2(11, -2)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1721346721]
 unique_name_in_owner = true
@@ -149,22 +146,14 @@ wait_time = 0.6
 script = ExtResource("3_nn08x")
 CurrentState = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine" unique_id=1976392354 node_paths=PackedStringArray("Player", "AnimPlayer")]
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1976392354]
 script = ExtResource("4_52ee3")
-Player = NodePath("../..")
-AnimPlayer = NodePath("../../AnimationPlayer")
 
-[node name="Run" type="Node" parent="StateMachine" unique_id=2129908582 node_paths=PackedStringArray("Player", "AnimPlayer")]
+[node name="Run" type="Node" parent="StateMachine" unique_id=2129908582]
 script = ExtResource("5_bhhdu")
-Player = NodePath("../..")
-AnimPlayer = NodePath("../../AnimationPlayer")
 
-[node name="SlideTackle" type="Node" parent="StateMachine" unique_id=543410441 node_paths=PackedStringArray("Player", "AnimPlayer")]
+[node name="SlideTackle" type="Node" parent="StateMachine" unique_id=543410441]
 script = ExtResource("6_nn08x")
-Player = NodePath("../..")
-AnimPlayer = NodePath("../../AnimationPlayer")
 
-[node name="Recovery" type="Node" parent="StateMachine" unique_id=1996426177 node_paths=PackedStringArray("Player", "AnimPlayer")]
+[node name="Recovery" type="Node" parent="StateMachine" unique_id=1996426177]
 script = ExtResource("7_52ee3")
-Player = NodePath("../..")
-AnimPlayer = NodePath("../../AnimationPlayer")

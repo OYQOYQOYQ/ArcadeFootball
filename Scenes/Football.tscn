@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://bv40fk6ipkoia"]
+
+[ext_resource type="Script" uid="uid://dpnpomiqhqafd" path="res://Scripts/Characters/Football.cs" id="1_3dh43"]
+[ext_resource type="Texture2D" uid="uid://b1i1vtwidythx" path="res://Assets/art/props/soccer-ball.png" id="1_7nh6h"]
+[ext_resource type="Script" uid="uid://c0a3nj7p3swnr" path="res://Scripts/StateMachine/StateMachine.cs" id="2_eb1ap"]
+[ext_resource type="Script" uid="uid://dl512j4e3dl2n" path="res://Scripts/StateMachine/FootballStates/Loose.cs" id="4_53lvt"]
+[ext_resource type="Script" uid="uid://ewkxxatuvgn3" path="res://Scripts/StateMachine/FootballStates/Dribble.cs" id="5_j7b2c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j7b2c"]
+atlas = ExtResource("1_7nh6h")
+region = Rect2(30, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xl2hg"]
+atlas = ExtResource("1_7nh6h")
+region = Rect2(20, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hm6op"]
+atlas = ExtResource("1_7nh6h")
+region = Rect2(10, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gihua"]
+atlas = ExtResource("1_7nh6h")
+region = Rect2(0, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eb1ap"]
+atlas = ExtResource("1_7nh6h")
+region = Rect2(0, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27lt3"]
+atlas = ExtResource("1_7nh6h")
+region = Rect2(10, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dh43"]
+atlas = ExtResource("1_7nh6h")
+region = Rect2(20, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2oe4"]
+atlas = ExtResource("1_7nh6h")
+region = Rect2(30, 0, 10, 10)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yfqi8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j7b2c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xl2hg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hm6op")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gihua")
+}],
+"loop": true,
+"name": &"left_dribble",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eb1ap")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27lt3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dh43")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o2oe4")
+}],
+"loop": true,
+"name": &"right_dribble",
+"speed": 20.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_681bb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3dh43"]
+
+[node name="Football" type="CharacterBody2D" unique_id=276191705 node_paths=PackedStringArray("FootballAnimatedSprite")]
+script = ExtResource("1_3dh43")
+FootballAnimatedSprite = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=566762561]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_yfqi8")
+animation = &"right_dribble"
+frame_progress = 0.28408462
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1590390804]
+scale = Vector2(0.38227922, 0.38821304)
+shape = SubResource("CircleShape2D_681bb")
+disabled = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=594040767]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=774848105]
+scale = Vector2(0.46748707, 0.46217445)
+shape = SubResource("CircleShape2D_3dh43")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1077029030 node_paths=PackedStringArray("CurrentState")]
+script = ExtResource("2_eb1ap")
+CurrentState = NodePath("Loose")
+
+[node name="Loose" type="Node" parent="StateMachine" unique_id=1723684378]
+script = ExtResource("4_53lvt")
+
+[node name="Dribble" type="Node" parent="StateMachine" unique_id=1128202256]
+script = ExtResource("5_j7b2c")
+
+[node name="Shot" type="Node" parent="StateMachine" unique_id=227029992]

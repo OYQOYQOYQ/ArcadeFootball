@@ -10,9 +10,9 @@ public partial class Idle : State
         AnimPlayer.Play(IdleState);
         Player.Velocity = Vector2.Zero;
 
-        #if DEBUG
+#if DEBUG
         GD.Print($"{Player.PlayerType} 进入了 Idle 状态");
-        #endif
+#endif
     }
 
     public override void PhysicsProcess(double delta)

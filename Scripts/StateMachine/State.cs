@@ -9,11 +9,15 @@ public partial class State : Node
     [Signal] public delegate void StateTransitionEventHandler(State fromState, StringName toState);
     protected Player Player { get; private set; } 
     protected AnimationPlayer AnimPlayer { get; private set; }
-    
-    public override void _Ready()
+    protected Football Football { get; private set; }
+    protected Area2D FootballArea { get; private set; }
+
+    public void Initialize(StateMachine machine)
     {
-        Player = Owner as Player;
-        AnimPlayer = Player?.GetNode<AnimationPlayer>("%AnimationPlayer");
+        Player = machine.Player;
+        AnimPlayer = machine.AnimPlayer;
+        Football = machine.Football;
+        FootballArea = machine.FootballArea;
     }
 
     public virtual void Enter(){}

@@ -79,15 +79,17 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3dh43"]
 
-[node name="Football" type="CharacterBody2D" unique_id=276191705 node_paths=PackedStringArray("FootballAnimatedSprite")]
+[node name="Football" type="CharacterBody2D" unique_id=276191705 node_paths=PackedStringArray("FootballAnimatedSprite", "FootballArea")]
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("1_3dh43")
 FootballAnimatedSprite = NodePath("AnimatedSprite2D")
+FootballArea = NodePath("Area2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=566762561]
-z_index = 1
 sprite_frames = SubResource("SpriteFrames_yfqi8")
 animation = &"right_dribble"
-frame_progress = 0.28408462
+frame_progress = 0.049016055
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1590390804]
 scale = Vector2(0.38227922, 0.38821304)
@@ -95,6 +97,8 @@ shape = SubResource("CircleShape2D_681bb")
 disabled = true
 
 [node name="Area2D" type="Area2D" parent="." unique_id=594040767]
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=774848105]
 scale = Vector2(0.46748707, 0.46217445)

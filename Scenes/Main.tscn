@@ -30,16 +30,16 @@ centered = false
 [node name="IsYShot" type="Node2D" parent="." unique_id=169202617]
 y_sort_enabled = true
 
-[node name="Football" parent="IsYShot" unique_id=276191705 instance=ExtResource("5_pbw6q")]
-position = Vector2(178, 100)
-
-[node name="Player" parent="IsYShot" unique_id=1800593941 instance=ExtResource("4_rgh2o")]
+[node name="Cpu1" parent="IsYShot" unique_id=1800593941 instance=ExtResource("4_rgh2o")]
 position = Vector2(114, 143)
 PlayerType = 2
 
-[node name="Player2" parent="IsYShot" unique_id=698807319 instance=ExtResource("4_rgh2o")]
-position = Vector2(150, 105)
+[node name="P1" parent="IsYShot" unique_id=698807319 instance=ExtResource("4_rgh2o")]
+position = Vector2(158, 99)
 
-[node name="Player3" parent="IsYShot" unique_id=529841515 instance=ExtResource("4_rgh2o")]
+[node name="P2" parent="IsYShot" unique_id=529841515 instance=ExtResource("4_rgh2o")]
 position = Vector2(143, 182)
 PlayerType = 1
+
+[node name="Football" parent="IsYShot" unique_id=276191705 instance=ExtResource("5_pbw6q")]
+position = Vector2(191, 95)

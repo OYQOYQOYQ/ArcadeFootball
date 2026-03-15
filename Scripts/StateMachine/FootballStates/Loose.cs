@@ -14,6 +14,11 @@ public partial class Loose : State
     public override void PhysicsProcess(double delta)
     {
     }
+    
+    public override void Exit()
+    {
+        FootballArea.BodyEntered -= OnBodyEntered;
+    }
 
     private void OnBodyEntered(Node2D body)
     {

@@ -13,9 +13,9 @@ public partial class SlideTackle : State
 
     public override void Enter()
 	{
-        #if DEBUG
+#if DEBUG
 		Log.Debug($"{Player.PlayerType}  进入了 SlideTackle 状态");
-        #endif
+#endif
 		
 		_slideTackleSpeed = Player.SlideTackleSpeed;
 		_duration = Player.SlideTackleDuration;

@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://e5ptxjw5gag8" path="res://Scripts/StateMachine/PlayerStates/SlideTackle.cs" id="6_nn08x"]
 [ext_resource type="Script" uid="uid://bbbrkjy8hwerd" path="res://Scripts/StateMachine/PlayerStates/Recovery.cs" id="7_52ee3"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_52ee3"]
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rpqav"]
 radius = 4.0
 height = 15.0
@@ -108,13 +110,27 @@ _data = {
 &"SlideTackle": SubResource("Animation_52ee3")
 }
 
-[node name="Player" type="CharacterBody2D" unique_id=1800593941 node_paths=PackedStringArray("PlayerSprite", "PlayerCollisionShape", "RecoveryTimer")]
+[node name="Player" type="CharacterBody2D" unique_id=1800593941 node_paths=PackedStringArray("DribblePoint", "HeadArea", "PlayerSprite", "PlayerCollisionShape", "RecoveryTimer") groups=["Players"]]
+collision_layer = 2
+collision_mask = 4
 motion_mode = 1
 script = ExtResource("1_5ixxa")
 SlideTackleDuration = 0.3
+DribblePoint = NodePath("DribblePoint")
+HeadArea = NodePath("Area2D")
 PlayerSprite = NodePath("Sprite2D")
 PlayerCollisionShape = NodePath("CollisionShape2D")
 RecoveryTimer = NodePath("RecoveryTimer")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=107942646]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2032276165]
+position = Vector2(0, -19.000002)
+scale = Vector2(0.6540277, 0.68449646)
+shape = SubResource("CapsuleShape2D_52ee3")
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1683273952]
 unique_name_in_owner = true

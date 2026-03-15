@@ -22,6 +22,8 @@ public partial class Player : CharacterBody2D
 
 	[ExportGroup("Node Reference")]
 	[Export] public Marker2D DribblePoint { get; private set; }  // 运球点
+
+	[Export] public Area2D HeadArea { get; private set; }  // 头部碰撞体区域
 	[Export] public Sprite2D PlayerSprite { get; private set; }  // 玩家精灵
 	[Export] public CollisionShape2D PlayerCollisionShape { get; set; }  // 玩家碰撞体
 	[Export] public Timer RecoveryTimer { get; private set; }  // 恢复计时器
@@ -32,9 +34,9 @@ public partial class Player : CharacterBody2D
 	public bool CanSlideTackle { get; set; } = true;  // 是否可以滑铲
 	public bool IsHoldFootball { get; set; } = false;  // 是否持球
 
-	public InputController GameInput { get; private set; }
+    public InputController GameInput { get; private set; }
 	private float _lastDirectionX;
-	private bool _lastFlipH;
+	private  bool _lastFlipH;
 
 	public override void _Ready()
 	{
